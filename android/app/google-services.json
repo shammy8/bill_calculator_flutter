@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "417329005138",
+    "firebase_url": "https://bill-calculator-eaac9.firebaseio.com",
+    "project_id": "bill-calculator-eaac9",
+    "storage_bucket": "bill-calculator-eaac9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:417329005138:android:acdf882f60805cef0ad58b",
+        "android_client_info": {
+          "package_name": "com.allansham.billcalculator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "417329005138-mg786rl8pn4ka40f9dcbesfd3jdn8t8l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.allansham.billcalculator",
+            "certificate_hash": "6da92e859f93a5ca9f1459eb4620f5307f6bea75"
+          }
+        },
+        {
+          "client_id": "417329005138-aijiopc7f56q6el2idd98j2fiegr3s0n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2hqErBz3oop9AZYFj9Re0CAEXp1iaUtk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "417329005138-aijiopc7f56q6el2idd98j2fiegr3s0n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
