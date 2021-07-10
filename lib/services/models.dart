@@ -12,6 +12,7 @@ class Bill {
       required this.editors,
       required this.creator});
 
+  // factory returns an instance of a class
   factory Bill.fromMap(Map data) {
     return Bill(
       creator: data['creator'] ?? '',
@@ -39,17 +40,25 @@ class Item {
 
   factory Item.fromMap(Map data) {
     return Item(
-        description: data['description'],
-        cost: data['cost'] ?? 0,
-        paidBy: data['paidBy'] ?? '',
-        date: data['date'] ?? DateTime.now(),
-        sharedBy: data['sharedBy'] ?? []);
+      description: data['description'] ?? '',
+      cost: data['cost'] ?? 0,
+      paidBy: data['paidBy'] ?? '',
+      date: data['date'] ?? DateTime.now(),
+      sharedBy:
+          (data['sharedBy'] as List).map((v) => SharedBy.fromMap(v)).toList(),
+    );
   }
 }
 
 class SharedBy {
   String friend = '';
   bool settled = false;
+  SharedBy({required this.friend, required this.settled});
+
+  factory SharedBy.fromMap(Map data) {
+    return SharedBy(
+        friend: data['friend'] ?? '', settled: data['settled'] ?? false);
+  }
 }
 
 // class BillWithItems extends Bill {
