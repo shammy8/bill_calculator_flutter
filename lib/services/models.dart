@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Bill {
   String uid;
   String name;
@@ -28,9 +30,9 @@ class Bill {
 class Item {
   String id;
   String description;
-  double cost;
+  num cost;
   String paidBy;
-  DateTime date;
+  Timestamp date;
   List<SharedBy> sharedBy;
 
   Item(
@@ -45,7 +47,7 @@ class Item {
     return Item(
       id: itemId,
       description: data['description'] ?? '',
-      cost: data['cost'] ?? 0,
+      cost: data['cost'] ?? 0.0,
       paidBy: data['paidBy'] ?? '',
       date: data['date'] ?? DateTime.now(),
       sharedBy:

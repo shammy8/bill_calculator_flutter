@@ -1,3 +1,4 @@
+import 'package:bill_calculator_flutter/shared/items.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -51,7 +52,8 @@ class BillScreen extends StatelessWidget {
                         label: Text('Add Item'),
                       )
                     ],
-                  )
+                  ),
+                  Items()
                 ],
               ),
             ),
