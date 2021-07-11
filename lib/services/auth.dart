@@ -41,7 +41,7 @@ class AuthService {
     return _firestore.doc('users/$userId').update({'primaryBill': billId});
   }
 
-  Future<void> signOut() {
+  Future<void> signOut() async {
     return _auth.signOut();
   }
 }
