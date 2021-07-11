@@ -13,13 +13,13 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   AuthService auth = AuthService();
 
-  late StreamSubscription<User?> unsubscribe; // TODO is using late correct here
+  late StreamSubscription<User?>
+      subscription; // TODO is using late correct here
 
   @override
   void initState() {
     super.initState();
-    // TODO unsubscribe
-    unsubscribe = auth.user.listen(
+    subscription = auth.user.listen(
       (user) {
         if (user != null) {
           Navigator.pushReplacementNamed(context, '/bill');
@@ -31,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void dispose() {
     super.dispose();
-    unsubscribe.cancel();
+    subscription.cancel();
   }
 
   @override
