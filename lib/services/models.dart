@@ -13,12 +13,13 @@ class Bill {
       required this.creator});
 
   // factory returns an instance of a class
-  factory Bill.fromMap(Map data) {
+  factory Bill.fromMap(Map data, String billId) {
     return Bill(
       creator: data['creator'] ?? '',
-      uid: data['uid'] ?? '',
-      friends: data['friends'] ?? [],
-      editors: data['editors'] ?? {},
+      uid: billId,
+      friends: (data['friends'] as List).map((e) => e as String).toList(),
+      editors:
+          (data['editors'] as Map).map((key, value) => MapEntry(key, value)),
       name: data['name'] ?? '',
     );
   }

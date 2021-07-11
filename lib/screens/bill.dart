@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:bill_calculator_flutter/services/services.dart';
 import 'package:bill_calculator_flutter/shared/drawer.dart';
+import 'package:bill_calculator_flutter/services/models.dart';
 
 class BillScreen extends StatelessWidget {
   final AuthService auth = AuthService();
@@ -15,16 +16,25 @@ class BillScreen extends StatelessWidget {
     //   Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
     // }
 
-    return StreamProvider<QuerySnapshot?>.value(
+    return StreamProvider<List<Bill>>.value(
       value: StoreService().getAllBills(user!.uid),
-      initialData: null,
+      initialData: [],
       builder: (context, child) {
         return Scaffold(
-          appBar: AppBar(
-            title: Text('Bill'),
-          ),
+          appBar: AppBar(),
           endDrawer: BillDrawer(),
-          body: Text('hi'),
+          body: Container(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Text('hi', style: Theme.of(context).textTheme.headline5)
+                  ],
+                )
+              ],
+            ),
+          ),
         );
       },
     );

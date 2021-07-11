@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
+import 'package:bill_calculator_flutter/services/models.dart';
 
 class BillDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final bills = context.watch<QuerySnapshot?>();
-
+    final bills = context.watch<List<Bill>>();
+    print(bills);
     return Drawer(
       child: ListView.builder(
-          itemCount: bills?.size,
+          itemCount: bills.length,
           itemBuilder: (context, index) {
-            Map<String, dynamic> data =
-                bills?.docs[index].data() as Map<String, dynamic>;
             return ListTile(
-              title: Text(data['name']),
-              subtitle: Text(data['creator']),
+              title: Text(bills[index].name),
+              subtitle: Text(bills[index].creator),
             );
           }),
     );
