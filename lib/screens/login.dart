@@ -22,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
     subscription = auth.user.listen(
       (user) {
         if (user != null) {
-          Navigator.pushReplacementNamed(context, '/bill');
+          Navigator.pushReplacementNamed(context, '/bill', arguments: 'empty');
         }
       },
     );
@@ -88,7 +88,8 @@ class LoginButton extends StatelessWidget {
         onPressed: () async {
           var user = await loginMethod();
           if (user != null) {
-            Navigator.pushReplacementNamed(context, '/bill');
+            Navigator.pushReplacementNamed(context, '/bill',
+                arguments: 'empty');
           }
         },
         icon: Icon(icon, color: Colors.white),

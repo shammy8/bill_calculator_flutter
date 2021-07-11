@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'screens/screens.dart';
+import 'package:provider/provider.dart';
 import 'services/services.dart';
+import 'package:bill_calculator_flutter/route_generator.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,10 +44,6 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    // Show error message if initialization failed
-    // print('error $_error');
-    // print('init $_initialized');
-
     if (_error) {
       return MaterialApp(
         home: Scaffold(
@@ -71,10 +67,8 @@ class _AppState extends State<App> {
             value: AuthService().user, initialData: null)
       ],
       child: MaterialApp(
-        routes: {
-          '/': (context) => LoginScreen(),
-          '/bill': (context) => BillScreen(),
-        },
+        initialRoute: '/',
+        onGenerateRoute: RouteGenerator.generateRoute,
         theme: ThemeData(brightness: Brightness.dark),
       ),
     );

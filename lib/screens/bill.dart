@@ -8,6 +8,8 @@ import 'package:bill_calculator_flutter/services/models.dart';
 
 class BillScreen extends StatelessWidget {
   final AuthService auth = AuthService();
+  final String billId;
+  BillScreen({required this.billId});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,8 @@ class BillScreen extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Text('hi', style: Theme.of(context).textTheme.headline5)
+                    Text('hi', style: Theme.of(context).textTheme.headline5),
+                    Text(billId, style: Theme.of(context).textTheme.headline5)
                   ],
                 )
               ],
