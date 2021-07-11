@@ -24,10 +24,10 @@ class BillScreen extends StatelessWidget {
           value: StoreService().getAllBills(user!.uid),
           initialData: [],
         ),
-        // StreamProvider<Bill>.value(
-        //   value: StoreService().getAllBills(user!.uid),
-        //   initialData: [],
-        // ),
+        StreamProvider<List<Item>>.value(
+          value: StoreService().getAllItems(billId),
+          initialData: [],
+        ),
       ],
       builder: (context, child) {
         final List<Bill> bills = context.watch<List<Bill>>();

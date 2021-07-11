@@ -17,4 +17,11 @@ class StoreService {
   // Stream<Bill> getBill(String billId) {
   //   return _db.doc('bills/$billId').snapshots().map((event) => null);
   // }
+
+  Stream<List<Item>> getAllItems(String billId) {
+    return _db.collection('bills/$billId/items').snapshots().map((snapshot) =>
+        snapshot.docs
+            .map((item) => Item.fromMap(item.data(), item.id))
+            .toList());
+  }
 }

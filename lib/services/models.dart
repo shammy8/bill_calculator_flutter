@@ -26,6 +26,7 @@ class Bill {
 }
 
 class Item {
+  String id;
   String description;
   double cost;
   String paidBy;
@@ -34,13 +35,15 @@ class Item {
 
   Item(
       {required this.description,
+      required this.id,
       required this.cost,
       required this.paidBy,
       required this.date,
       required this.sharedBy});
 
-  factory Item.fromMap(Map data) {
+  factory Item.fromMap(Map data, String itemId) {
     return Item(
+      id: itemId,
       description: data['description'] ?? '',
       cost: data['cost'] ?? 0,
       paidBy: data['paidBy'] ?? '',
