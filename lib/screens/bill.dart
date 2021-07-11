@@ -18,27 +18,53 @@ class BillScreen extends StatelessWidget {
     //   Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
     // }
 
-    return StreamProvider<List<Bill>>.value(
-      value: StoreService().getAllBills(user!.uid),
-      initialData: [],
+    return MultiProvider(
+      providers: [
+        StreamProvider<List<Bill>>.value(
+          value: StoreService().getAllBills(user!.uid),
+          initialData: [],
+        ),
+        // StreamProvider<Bill>.value(
+        //   value: StoreService().getAllBills(user!.uid),
+        //   initialData: [],
+        // ),
+      ],
       builder: (context, child) {
-        return Scaffold(
-          appBar: AppBar(),
-          endDrawer: BillDrawer(),
-          body: Container(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Text('hi', style: Theme.of(context).textTheme.headline5),
-                    Text(billId, style: Theme.of(context).textTheme.headline5)
-                  ],
-                )
-              ],
+        final List<Bill> bills = context.watch<List<Bill>>();
+        if (billId != 'empty') {
+          Bill bill = bills.firstWhere((bill) => bill.uid == billId);
+          return Scaffold(
+            appBar: AppBar(),
+            endDrawer: BillDrawer(),
+            body: Container(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(bill.name,
+                          style: Theme.of(context).textTheme.headline5),
+                      ElevatedButton.icon(
+                        onPressed: () {},
+                        icon: Icon(Icons.add),
+                        label: Text('Add Item'),
+                      )
+                    ],
+                  )
+                ],
+              ),
             ),
-          ),
-        );
+          );
+        } else {
+          return Scaffold(
+            appBar: AppBar(),
+            endDrawer: BillDrawer(),
+            body: Center(
+              child: Text('Add or choose a bill'),
+            ),
+          );
+        }
       },
     );
   }
