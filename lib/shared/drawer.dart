@@ -15,7 +15,7 @@ class BillDrawer extends StatelessWidget {
     return Drawer(
       child: SafeArea(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
               padding: EdgeInsets.only(left: 8),
@@ -45,13 +45,18 @@ class BillDrawer extends StatelessWidget {
                   label: Text('Copy UID to clipboard')),
             ),
             Divider(),
+            ElevatedButton.icon(
+              onPressed: () {},
+              icon: Icon(Icons.add),
+              label: Text('Add Bill'),
+            ),
             Expanded(
               child: ListView.builder(
                   itemCount: bills.length,
                   itemBuilder: (context, index) {
                     return ListTile(
                       title: Text(bills[index].name),
-                      subtitle: Text(bills[index].creator),
+                      // subtitle: Text(bills[index].creator),
                       onTap: () {
                         Navigator.pushReplacementNamed(context, '/bill',
                             arguments: bills[index].uid);
