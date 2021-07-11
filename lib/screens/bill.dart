@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:bill_calculator_flutter/services/services.dart';
+import 'package:bill_calculator_flutter/shared/drawer.dart';
 
 class BillScreen extends StatelessWidget {
   final AuthService auth = AuthService();
@@ -18,24 +19,12 @@ class BillScreen extends StatelessWidget {
       value: StoreService().getAllBills(user!.uid),
       initialData: null,
       builder: (context, child) {
-        final bills = context.watch<QuerySnapshot?>();
-
         return Scaffold(
           appBar: AppBar(
             title: Text('Bill'),
           ),
-          endDrawer: Drawer(),
-          body: ListView.builder(
-              itemCount: bills?.size,
-              itemBuilder: (context, index) {
-                Map<String, dynamic> data =
-                    bills?.docs[index].data() as Map<String, dynamic>;
-                print(data.toString());
-                return ListTile(
-                  title: Text(data['name']),
-                  subtitle: Text(data['creator']),
-                );
-              }),
+          endDrawer: BillDrawer(),
+          body: Text('hi'),
         );
       },
     );
