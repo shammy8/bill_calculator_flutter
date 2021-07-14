@@ -74,8 +74,7 @@ class BillScreen extends StatelessWidget {
                             ),
                             TwoSidedCheckableList(
                               sharedBy: item.sharedBy,
-                              onTap: (sharedByElement, sharedByElementIndex,
-                                  newValue) {
+                              onTap: (sharedByElement, newValue) {
                                 // print(sharedByElement);
                                 sharedBy = sharedBy.map((element) {
                                   if (sharedByElement.friend ==
@@ -118,7 +117,7 @@ class BillScreen extends StatelessWidget {
 }
 
 class TwoSidedCheckableList extends StatelessWidget {
-  final void Function(SharedByElement, num, bool) onTap;
+  final void Function(SharedByElement, bool) onTap;
   final List<SharedByElement> sharedBy;
 
   TwoSidedCheckableList({required this.sharedBy, required this.onTap});
@@ -132,7 +131,7 @@ class TwoSidedCheckableList extends StatelessWidget {
             children: [
               Switch(
                 onChanged: (value) {
-                  onTap(sharedBy[i], i, value);
+                  onTap(sharedBy[i], value);
                 },
                 value: sharedBy[i].settled,
               ),
@@ -143,9 +142,9 @@ class TwoSidedCheckableList extends StatelessWidget {
               if (i + 1 < sharedBy.length)
                 Switch(
                   onChanged: (value) {
-                    onTap(sharedBy[i + 1], i + 1, value);
+                    onTap(sharedBy[i + 1], value);
                   },
-                  value: sharedBy[i].settled,
+                  value: sharedBy[i + 1].settled,
                 ),
             ],
           ),
