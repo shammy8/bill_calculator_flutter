@@ -69,9 +69,16 @@ class BillScreen extends StatelessWidget {
                                 Text(item.description,
                                     style:
                                         Theme.of(context).textTheme.headline6),
-                                Text(oCcy.format(item.cost),
-                                    style:
-                                        Theme.of(context).textTheme.headline6),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text(oCcy.format(item.cost),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline6),
+                                    paidBySpan(context, item.paidBy),
+                                  ],
+                                ),
                               ],
                             ),
                             TwoSidedCheckableList(
@@ -114,6 +121,21 @@ class BillScreen extends StatelessWidget {
           );
         }
       },
+    );
+  }
+
+  RichText paidBySpan(BuildContext context, String payer) {
+    return RichText(
+      text: TextSpan(
+        style: Theme.of(context).textTheme.bodyText1,
+        text: "paid by ",
+        children: [
+          TextSpan(
+            style: TextStyle(fontWeight: FontWeight.w900),
+            text: payer,
+          ),
+        ],
+      ),
     );
   }
 }
