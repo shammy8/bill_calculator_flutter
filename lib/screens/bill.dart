@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:bill_calculator_flutter/shared/items.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:bill_calculator_flutter/services/models.dart';
 class BillScreen extends StatelessWidget {
   final AuthService auth = AuthService();
   final String billId;
+  final oCcy = new NumberFormat("#,##0.00", "en_US");
   BillScreen({required this.billId});
 
   @override
@@ -67,7 +69,7 @@ class BillScreen extends StatelessWidget {
                                 Text(item.description,
                                     style:
                                         Theme.of(context).textTheme.headline6),
-                                Text(item.cost.toString(),
+                                Text(oCcy.format(item.cost),
                                     style:
                                         Theme.of(context).textTheme.headline6),
                               ],
