@@ -24,4 +24,16 @@ class StoreService {
             .map((item) => Item.fromMap(item.data(), item.id))
             .toList());
   }
+
+  // Future<String>
+  updateItem(List<SharedByElement> sharedBy, String itemId, String billId) {
+    print(sharedBy[0].friend);
+    print(sharedBy[0].settled);
+    // print(sharedBy[1].friend);
+    // print(sharedBy[1].settled);
+    // sharedBy.toString().
+    // return _db
+    //     .doc('bills/$billId/items/$itemId')
+    //     .update({'sharedBy': sharedBy});
+  }
 }

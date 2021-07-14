@@ -33,7 +33,7 @@ class Item {
   num cost;
   String paidBy;
   Timestamp date;
-  List<SharedBy> sharedBy;
+  List<SharedByElement> sharedBy;
 
   Item(
       {required this.description,
@@ -50,19 +50,20 @@ class Item {
       cost: data['cost'] ?? 0.0,
       paidBy: data['paidBy'] ?? '',
       date: data['date'] ?? DateTime.now(),
-      sharedBy:
-          (data['sharedBy'] as List).map((v) => SharedBy.fromMap(v)).toList(),
+      sharedBy: (data['sharedBy'] as List)
+          .map((v) => SharedByElement.fromMap(v))
+          .toList(),
     );
   }
 }
 
-class SharedBy {
+class SharedByElement {
   String friend = '';
   bool settled = false;
-  SharedBy({required this.friend, required this.settled});
+  SharedByElement({required this.friend, required this.settled});
 
-  factory SharedBy.fromMap(Map data) {
-    return SharedBy(
+  factory SharedByElement.fromMap(Map data) {
+    return SharedByElement(
         friend: data['friend'] ?? '', settled: data['settled'] ?? false);
   }
 }

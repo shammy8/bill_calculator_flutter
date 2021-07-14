@@ -56,21 +56,41 @@ class BillScreen extends StatelessWidget {
                   sliver: SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
+                        Item item = items[index];
+                        List<SharedByElement> sharedBy = item.sharedBy;
+
                         return Column(
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(items[index].description,
+                                Text(item.description,
                                     style:
                                         Theme.of(context).textTheme.headline6),
-                                Text(items[index].cost.toString(),
+                                Text(item.cost.toString(),
                                     style:
                                         Theme.of(context).textTheme.headline6),
                               ],
                             ),
                             TwoSidedCheckableList(
-                              sharedBy: items[index].sharedBy,
+                              sharedBy: item.sharedBy,
+                              onTap: (sharedByElement, sharedByElementIndex,
+                                  newValue) {
+                                // print(sharedByElement);
+                                sharedBy = sharedBy.map((element) {
+                                  if (sharedByElement.friend ==
+                                      element.friend) {
+                                    return SharedByElement.fromMap({
+                                      'friend': sharedByElement.friend,
+                                      'settled': newValue
+                                    });
+                                  } else {
+                                    return element;
+                                  }
+                                }).toList();
+                                StoreService()
+                                    .updateItem(sharedBy, item.id, bill.uid);
+                              },
                             ),
                             Divider(),
                           ],
@@ -98,10 +118,10 @@ class BillScreen extends StatelessWidget {
 }
 
 class TwoSidedCheckableList extends StatelessWidget {
-  // final void Function(Friend) onTap;
-  final List<SharedBy> sharedBy;
+  final void Function(SharedByElement, num, bool) onTap;
+  final List<SharedByElement> sharedBy;
 
-  TwoSidedCheckableList({required this.sharedBy});
+  TwoSidedCheckableList({required this.sharedBy, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +131,9 @@ class TwoSidedCheckableList extends StatelessWidget {
           Row(
             children: [
               Switch(
-                onChanged: (v) {},
+                onChanged: (value) {
+                  onTap(sharedBy[i], i, value);
+                },
                 value: sharedBy[i].settled,
               ),
               Text(sharedBy[i].friend),
@@ -120,7 +142,9 @@ class TwoSidedCheckableList extends StatelessWidget {
                 Text(sharedBy[i + 1].friend),
               if (i + 1 < sharedBy.length)
                 Switch(
-                  onChanged: (v) {},
+                  onChanged: (value) {
+                    onTap(sharedBy[i + 1], i + 1, value);
+                  },
                   value: sharedBy[i].settled,
                 ),
             ],
