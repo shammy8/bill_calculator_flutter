@@ -11,7 +11,6 @@ import 'package:bill_calculator_flutter/services/models.dart';
 class BillScreen extends StatelessWidget {
   final AuthService auth = AuthService();
   final String billId;
-  final oCcy = NumberFormat("#,##0.00", "en_US");
   BillScreen({required this.billId});
 
   @override
@@ -56,62 +55,7 @@ class BillScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                SliverPadding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                  sliver: SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
-                        final Item item = items[index];
-                        List<SharedByElement> sharedBy = item.sharedBy;
-
-                        return Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(item.description,
-                                    style:
-                                        Theme.of(context).textTheme.headline6),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text(oCcy.format(item.cost),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline6),
-                                    paidBySpan(context, item.paidBy),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            TwoSidedCheckableList(
-                              sharedBy: item.sharedBy,
-                              onTap: (sharedByElement, newValue) {
-                                // print(sharedByElement);
-                                sharedBy = sharedBy.map((element) {
-                                  if (sharedByElement.friend ==
-                                      element.friend) {
-                                    return SharedByElement.fromMap({
-                                      'friend': sharedByElement.friend,
-                                      'settled': newValue
-                                    });
-                                  } else {
-                                    return element;
-                                  }
-                                }).toList();
-                                StoreService()
-                                    .updateItem(sharedBy, item.id, bill.uid);
-                              },
-                            ),
-                            const Divider(),
-                          ],
-                        );
-                      },
-                      childCount: items.length,
-                    ),
-                  ),
-                ),
+                ItemList(items: items, billId: bill.uid)
               ],
             ),
           );
@@ -125,6 +69,68 @@ class BillScreen extends StatelessWidget {
           );
         }
       },
+    );
+  }
+}
+
+class ItemList extends StatelessWidget {
+  final List<Item> items;
+  final String billId;
+  final oCcy = NumberFormat("#,##0.00", "en_US");
+
+  ItemList({required this.items, required this.billId});
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverPadding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      sliver: SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (BuildContext context, int index) {
+            final Item item = items[index];
+            List<SharedByElement> sharedBy = item.sharedBy;
+
+            return Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(item.description,
+                        style: Theme.of(context).textTheme.headline6),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(oCcy.format(item.cost),
+                            style: Theme.of(context).textTheme.headline6),
+                        paidBySpan(context, item.paidBy),
+                      ],
+                    ),
+                  ],
+                ),
+                TwoSidedCheckableList(
+                  sharedBy: item.sharedBy,
+                  onTap: (sharedByElement, newValue) {
+                    // print(sharedByElement);
+                    sharedBy = sharedBy.map((element) {
+                      if (sharedByElement.friend == element.friend) {
+                        return SharedByElement.fromMap({
+                          'friend': sharedByElement.friend,
+                          'settled': newValue
+                        });
+                      } else {
+                        return element;
+                      }
+                    }).toList();
+                    StoreService().updateItem(sharedBy, item.id, billId);
+                  },
+                ),
+                const Divider(),
+              ],
+            );
+          },
+          childCount: items.length,
+        ),
+      ),
     );
   }
 
