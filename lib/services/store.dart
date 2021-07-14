@@ -25,15 +25,13 @@ class StoreService {
             .toList());
   }
 
-  // Future<String>
-  updateItem(List<SharedByElement> sharedBy, String itemId, String billId) {
-    print(sharedBy[0].friend);
-    print(sharedBy[0].settled);
-    // print(sharedBy[1].friend);
-    // print(sharedBy[1].settled);
-    // sharedBy.toString().
-    // return _db
-    //     .doc('bills/$billId/items/$itemId')
-    //     .update({'sharedBy': sharedBy});
+  Future<void> updateItem(
+      List<SharedByElement> sharedBy, String itemId, String billId) {
+    var sharedByAsList = sharedBy.map((element) {
+      return element.toJson();
+    }).toList();
+    return _db
+        .doc('bills/$billId/items/$itemId')
+        .update({'sharedBy': sharedByAsList});
   }
 }

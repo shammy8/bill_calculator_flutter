@@ -66,6 +66,10 @@ class SharedByElement {
     return SharedByElement(
         friend: data['friend'] ?? '', settled: data['settled'] ?? false);
   }
+
+  Map<String, dynamic> toJson() {
+    return {'friend': friend, 'settled': settled};
+  }
 }
 
 // class BillWithItems extends Bill {
