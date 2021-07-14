@@ -1,14 +1,14 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:bill_calculator_flutter/services/services.dart';
 import 'package:bill_calculator_flutter/services/models.dart';
 
 class ItemList extends StatelessWidget {
   final List<Item> items;
   final String billId;
+  final void Function(List<SharedByElement>, String itemId) onTap;
   final oCcy = NumberFormat("#,##0.00", "en_US");
 
-  ItemList({required this.items, required this.billId});
+  ItemList({required this.items, required this.billId, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class ItemList extends StatelessWidget {
                   ],
                 ),
                 TwoSidedCheckableList(
-                  sharedBy: item.sharedBy,
+                  sharedBy: sharedBy,
                   onTap: (sharedByElement, newValue) {
                     // print(sharedByElement);
                     sharedBy = sharedBy.map((element) {
@@ -51,7 +51,7 @@ class ItemList extends StatelessWidget {
                         return element;
                       }
                     }).toList();
-                    StoreService().updateItem(sharedBy, item.id, billId);
+                    onTap(sharedBy, item.id);
                   },
                 ),
                 const Divider(),

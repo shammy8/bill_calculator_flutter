@@ -1,4 +1,3 @@
-// import 'package:bill_calculator_flutter/shared/items.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -54,7 +53,11 @@ class BillScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                ItemList(items: items, billId: bill.uid)
+                ItemList(
+                    items: items,
+                    billId: bill.uid,
+                    onTap: (sharedBy, itemId) =>
+                        StoreService().updateItem(sharedBy, itemId, billId))
               ],
             ),
           );
