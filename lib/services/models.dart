@@ -17,12 +17,12 @@ class Bill {
   // factory returns an instance of a class
   factory Bill.fromMap(Map data, String billId) {
     return Bill(
-      creator: data['creator'] ?? '',
+      creator: data['creator'] as String? ?? '',
       uid: billId,
       friends: (data['friends'] as List).map((e) => e as String).toList(),
-      editors:
-          (data['editors'] as Map).map((key, value) => MapEntry(key, value)),
-      name: data['name'] ?? '',
+      editors: (data['editors'] as Map)
+          .map((key, value) => MapEntry(key as String, value as bool)),
+      name: data['name'] as String? ?? '',
     );
   }
 }
@@ -46,12 +46,12 @@ class Item {
   factory Item.fromMap(Map data, String itemId) {
     return Item(
       id: itemId,
-      description: data['description'] ?? '',
-      cost: data['cost'] ?? 0.0,
-      paidBy: data['paidBy'] ?? '',
-      date: data['date'] ?? DateTime.now(),
+      description: data['description'] as String? ?? '',
+      cost: data['cost'] as num? ?? 0.0,
+      paidBy: data['paidBy'] as String? ?? '',
+      date: data['date'] as Timestamp? ?? Timestamp(0, 0),
       sharedBy: (data['sharedBy'] as List)
-          .map((v) => SharedByElement.fromMap(v))
+          .map((v) => SharedByElement.fromMap(v as Map<dynamic, dynamic>))
           .toList(),
     );
   }
@@ -64,7 +64,8 @@ class SharedByElement {
 
   factory SharedByElement.fromMap(Map data) {
     return SharedByElement(
-        friend: data['friend'] ?? '', settled: data['settled'] ?? false);
+        friend: data['friend'] as String? ?? '',
+        settled: data['settled'] as bool? ?? false);
   }
 
   Map<String, dynamic> toJson() {

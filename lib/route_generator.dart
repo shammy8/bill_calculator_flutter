@@ -1,6 +1,6 @@
 import 'package:bill_calculator_flutter/screens/screens.dart';
 import 'package:flutter/material.dart';
-import 'package:bill_calculator_flutter/main.dart';
+// import 'package:bill_calculator_flutter/main.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -24,9 +24,9 @@ class RouteGenerator {
     return MaterialPageRoute(builder: (_) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Error'),
+          title: const Text('Error'),
         ),
-        body: Center(child: Text('Error')),
+        body: const Center(child: Text('Error')),
       );
     });
   }

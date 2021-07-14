@@ -27,7 +27,7 @@ class StoreService {
 
   Future<void> updateItem(
       List<SharedByElement> sharedBy, String itemId, String billId) {
-    var sharedByAsList = sharedBy.map((element) {
+    final sharedByAsList = sharedBy.map((element) {
       return element.toJson();
     }).toList();
     return _db

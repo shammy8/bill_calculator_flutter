@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -38,11 +38,12 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.all(30),
-        decoration: BoxDecoration(),
+        padding: const EdgeInsets.all(30),
+        decoration: const BoxDecoration(),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            FlutterLogo(
+            const FlutterLogo(
               size: 150,
             ),
             Text(
@@ -62,8 +63,6 @@ class _LoginScreenState extends State<LoginScreen> {
               icon: Icons.face,
             ),
           ],
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         ),
       ),
     );
@@ -76,17 +75,17 @@ class LoginButton extends StatelessWidget {
   final Color? color;
   final Function loginMethod;
 
-  LoginButton(
+  const LoginButton(
       {required this.text, this.icon, this.color, required this.loginMethod});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 10),
+      margin: const EdgeInsets.only(bottom: 10),
       child: TextButton.icon(
         // padding: EdgeInsets.all(30),
         onPressed: () async {
-          var user = await loginMethod();
+          final user = await loginMethod();
           if (user != null) {
             Navigator.pushReplacementNamed(context, '/bill',
                 arguments: 'empty');
@@ -94,10 +93,10 @@ class LoginButton extends StatelessWidget {
         },
         icon: Icon(icon, color: Colors.white),
         style: TextButton.styleFrom(
-            backgroundColor: color, padding: EdgeInsets.all(30)),
+            backgroundColor: color, padding: const EdgeInsets.all(30)),
         label: Expanded(
           child: Text(
-            '$text',
+            text ?? '',
             textAlign: TextAlign.center,
             textScaleFactor: 1.3,
           ),

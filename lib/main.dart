@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
-import 'services/services.dart';
 import 'package:bill_calculator_flutter/route_generator.dart';
+import 'services/services.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,6 +11,7 @@ void main() {
 }
 
 class App extends StatefulWidget {
+  @override
   _AppState createState() => _AppState();
 }
 
@@ -20,7 +21,7 @@ class _AppState extends State<App> {
   bool _error = false;
 
   // Define an async function to initialize FlutterFire
-  void initializeFlutterFire() async {
+  Future initializeFlutterFire() async {
     try {
       // Wait for Firebase to initialize and set `_initialized` state to true
       await Firebase.initializeApp();
@@ -28,7 +29,7 @@ class _AppState extends State<App> {
         _initialized = true;
       });
     } catch (e) {
-      print(e);
+      // print(e);
       // Set `_error` state to true if Firebase initialization fails
       setState(() {
         _error = true;
@@ -45,7 +46,7 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     if (_error) {
-      return MaterialApp(
+      return const MaterialApp(
         home: Scaffold(
           body: Text('Something went wrong'),
         ),
@@ -54,7 +55,7 @@ class _AppState extends State<App> {
 
     // Show a loader until FlutterFire is initialized
     if (!_initialized) {
-      return MaterialApp(
+      return const MaterialApp(
         home: Scaffold(
           body: Text('Loading'),
         ),

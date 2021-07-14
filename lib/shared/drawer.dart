@@ -15,16 +15,15 @@ class BillDrawer extends StatelessWidget {
     return Drawer(
       child: SafeArea(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-              padding: EdgeInsets.only(left: 8),
+              padding: const EdgeInsets.only(left: 8),
               child: TextButton.icon(
-                label: Text(
+                label: const Text(
                   'Sign out',
                   style: TextStyle(color: Colors.red),
                 ),
-                icon: Icon(
+                icon: const Icon(
                   Icons.logout,
                   color: Colors.red,
                 ),
@@ -36,19 +35,19 @@ class BillDrawer extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 8),
+              padding: const EdgeInsets.only(left: 8),
               child: TextButton.icon(
                   onPressed: () {
                     Clipboard.setData(ClipboardData(text: user?.uid));
                   },
-                  icon: Icon(Icons.copy),
-                  label: Text('Copy UID to clipboard')),
+                  icon: const Icon(Icons.copy),
+                  label: const Text('Copy UID to clipboard')),
             ),
-            Divider(),
+            const Divider(),
             ElevatedButton.icon(
               onPressed: () {},
-              icon: Icon(Icons.add),
-              label: Text('Add Bill'),
+              icon: const Icon(Icons.add),
+              label: const Text('Add Bill'),
             ),
             Expanded(
               child: ListView.builder(

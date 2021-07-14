@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
-import 'package:bill_calculator_flutter/shared/items.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:bill_calculator_flutter/shared/items.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,7 +11,7 @@ import 'package:bill_calculator_flutter/services/models.dart';
 class BillScreen extends StatelessWidget {
   final AuthService auth = AuthService();
   final String billId;
-  final oCcy = new NumberFormat("#,##0.00", "en_US");
+  final oCcy = NumberFormat("#,##0.00", "en_US");
   BillScreen({required this.billId});
 
   @override
@@ -25,20 +25,23 @@ class BillScreen extends StatelessWidget {
       providers: [
         StreamProvider<List<Bill>>.value(
           value: StoreService().getAllBills(user!.uid),
-          initialData: [],
+          initialData: const [],
         ),
         StreamProvider<List<Item>>.value(
           value: StoreService().getAllItems(billId),
-          initialData: [],
+          initialData: const [],
         ),
       ],
       builder: (context, child) {
         final List<Bill> bills = context.watch<List<Bill>>();
         final items = context.watch<List<Item>>();
         if (billId != 'empty') {
-          Bill bill = bills.firstWhere((bill) => bill.uid == billId);
+          final Bill bill = bills.firstWhere((bill) => bill.uid == billId);
           return Scaffold(
             endDrawer: BillDrawer(),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {},
+            ),
             body: CustomScrollView(
               slivers: [
                 SliverAppBar(
@@ -54,11 +57,12 @@ class BillScreen extends StatelessWidget {
                   ),
                 ),
                 SliverPadding(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                   sliver: SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
-                        Item item = items[index];
+                        final Item item = items[index];
                         List<SharedByElement> sharedBy = item.sharedBy;
 
                         return Column(
@@ -100,7 +104,7 @@ class BillScreen extends StatelessWidget {
                                     .updateItem(sharedBy, item.id, bill.uid);
                               },
                             ),
-                            Divider(),
+                            const Divider(),
                           ],
                         );
                       },
@@ -115,7 +119,7 @@ class BillScreen extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(),
             endDrawer: BillDrawer(),
-            body: Center(
+            body: const Center(
               child: Text('Add or choose a bill'),
             ),
           );
@@ -131,7 +135,7 @@ class BillScreen extends StatelessWidget {
         text: "paid by ",
         children: [
           TextSpan(
-            style: TextStyle(fontWeight: FontWeight.w900),
+            style: const TextStyle(fontWeight: FontWeight.w900),
             text: payer,
           ),
         ],
@@ -144,7 +148,7 @@ class TwoSidedCheckableList extends StatelessWidget {
   final void Function(SharedByElement, bool) onTap;
   final List<SharedByElement> sharedBy;
 
-  TwoSidedCheckableList({required this.sharedBy, required this.onTap});
+  const TwoSidedCheckableList({required this.sharedBy, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -160,7 +164,7 @@ class TwoSidedCheckableList extends StatelessWidget {
                 value: sharedBy[i].settled,
               ),
               Text(sharedBy[i].friend),
-              Spacer(),
+              const Spacer(),
               if (i + 1 < sharedBy.length) //
                 Text(sharedBy[i + 1].friend),
               if (i + 1 < sharedBy.length)

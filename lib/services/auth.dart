@@ -1,7 +1,7 @@
+import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'dart:async';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -11,7 +11,7 @@ class AuthService {
   Stream<User?> get user => _auth.authStateChanges();
 
   Future<User?> anonLogin() async {
-    UserCredential user = await _auth.signInAnonymously();
+    final UserCredential user = await _auth.signInAnonymously();
     // updateUserData(user)
     return user.user;
   }
@@ -27,8 +27,8 @@ class AuthService {
         await googleSignInAccount.authentication;
     final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
-    UserCredential result = await _auth.signInWithCredential(credential);
-    User? user = result.user;
+    final UserCredential result = await _auth.signInWithCredential(credential);
+    final User? user = result.user;
     // updateUserData(user)
     return user;
     // } catch (error) {
