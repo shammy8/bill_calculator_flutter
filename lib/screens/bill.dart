@@ -37,7 +37,13 @@ class BillScreen extends StatelessWidget {
           return Scaffold(
             endDrawer: BillDrawer(),
             floatingActionButton: FloatingActionButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed(
+                  '/add_bill',
+                  arguments: bill,
+                );
+              },
+              child: const Icon(Icons.add),
             ),
             body: CustomScrollView(
               slivers: [

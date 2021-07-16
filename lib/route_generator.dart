@@ -1,5 +1,7 @@
-import 'package:bill_calculator_flutter/screens/screens.dart';
 import 'package:flutter/material.dart';
+import 'package:bill_calculator_flutter/screens/add_item.dart';
+import 'package:bill_calculator_flutter/screens/screens.dart';
+import 'package:bill_calculator_flutter/services/models.dart';
 // import 'package:bill_calculator_flutter/main.dart';
 
 class RouteGenerator {
@@ -13,6 +15,11 @@ class RouteGenerator {
           return MaterialPageRoute(
             builder: (_) => BillScreen(billId: args),
           );
+        }
+        return _errorRoute();
+      case '/add_bill':
+        if (args is Bill) {
+          return MaterialPageRoute(builder: (_) => AddItemScreen(bill: args));
         }
         return _errorRoute();
       default:
