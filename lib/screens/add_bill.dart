@@ -34,7 +34,7 @@ class _AddBillScreenState extends State<AddBillScreen> {
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
                 TextFormField(
-                  decoration: const InputDecoration(hintText: 'Name'),
+                  decoration: const InputDecoration(labelText: 'Name'),
                   validator: (val) {
                     if (val == '') {
                       return 'Enter a name';
@@ -61,7 +61,7 @@ class _AddBillScreenState extends State<AddBillScreen> {
                     tagPadding: const EdgeInsets.all(6.0),
                   ),
                   textFieldStyler: TextFieldStyler(
-                    helperText: '',
+                    helperText: 'Press space after each entry',
                     hintText: 'Name of friends',
                     textFieldEnabledBorder: const OutlineInputBorder(
                       borderSide: BorderSide(style: BorderStyle.none),
@@ -93,7 +93,7 @@ class _AddBillScreenState extends State<AddBillScreen> {
                     tagPadding: const EdgeInsets.all(6.0),
                   ),
                   textFieldStyler: TextFieldStyler(
-                    helperText: '',
+                    helperText: 'Press space after each entry',
                     hintText: 'UID of editors',
                     textFieldEnabledBorder: const OutlineInputBorder(
                       borderSide: BorderSide(style: BorderStyle.none),
