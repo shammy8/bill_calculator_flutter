@@ -32,7 +32,7 @@ class BillScreen extends StatelessWidget {
       builder: (context, child) {
         final List<Bill> bills = context.watch<List<Bill>>();
 
-        final items = context.watch<List<Item>>();
+        List<Item> items = context.watch<List<Item>>();
         items.sort((a, b) => b.date.compareTo(a.date));
 
         if (billId != 'empty') {
@@ -42,7 +42,7 @@ class BillScreen extends StatelessWidget {
             floatingActionButton: FloatingActionButton(
               onPressed: () {
                 Navigator.of(context).pushNamed(
-                  '/add_bill',
+                  '/add_item',
                   arguments: bill,
                 );
               },

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:bill_calculator_flutter/screens/add_item.dart';
 import 'package:bill_calculator_flutter/screens/screens.dart';
 import 'package:bill_calculator_flutter/services/models.dart';
 // import 'package:bill_calculator_flutter/main.dart';
@@ -17,11 +16,13 @@ class RouteGenerator {
           );
         }
         return _errorRoute();
-      case '/add_bill':
+      case '/add_item':
         if (args is Bill) {
           return MaterialPageRoute(builder: (_) => AddItemScreen(bill: args));
         }
         return _errorRoute();
+      case '/add_bill':
+        return MaterialPageRoute(builder: (_) => const AddBillScreen());
       default:
         return _errorRoute();
     }

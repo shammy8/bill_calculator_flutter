@@ -45,7 +45,9 @@ class BillDrawer extends StatelessWidget {
             ),
             const Divider(),
             ElevatedButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed('/add_bill');
+              },
               icon: const Icon(Icons.add),
               label: const Text('Add Bill'),
             ),
