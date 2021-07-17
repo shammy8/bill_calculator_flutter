@@ -32,8 +32,10 @@ class BillScreen extends StatelessWidget {
       builder: (context, child) {
         final List<Bill> bills = context.watch<List<Bill>>();
 
-        List<Item> items = context.watch<List<Item>>();
-        items.sort((a, b) => b.date.compareTo(a.date));
+        final List<Item> items = context.watch<List<Item>>();
+        List<Item> sortedItems =
+            List.from(items); // need to copy it before you can sort the above
+        sortedItems.sort((a, b) => b.date.compareTo(a.date));
 
         if (billId != 'empty') {
           final Bill bill = bills.firstWhere((bill) => bill.uid == billId);
@@ -63,7 +65,7 @@ class BillScreen extends StatelessWidget {
                   ),
                 ),
                 ItemList(
-                    items: items,
+                    items: sortedItems,
                     billId: bill.uid,
                     onTap: (sharedBy, itemId) =>
                         StoreService().updateItem(sharedBy, itemId, billId))
