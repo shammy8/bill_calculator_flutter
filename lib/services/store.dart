@@ -25,6 +25,23 @@ class StoreService {
             .toList());
   }
 
+  Future<void> addItem(String billId, String description, num cost,
+      String paidBy, List<dynamic> sharedBy, DateTime date) {
+    final formattedSharedBy = sharedBy
+        .map((e) => {
+              'friend': e,
+              'settled': e == paidBy,
+            })
+        .toList();
+    return _db.collection('bills/$billId/items').add({
+      'description': description,
+      'cost': cost,
+      'paidBy': paidBy,
+      'sharedBy': formattedSharedBy,
+      'date': date
+    });
+  }
+
   Future<void> updateItem(
       List<SharedByElement> sharedBy, String itemId, String billId) {
     final sharedByAsList = sharedBy.map((element) {

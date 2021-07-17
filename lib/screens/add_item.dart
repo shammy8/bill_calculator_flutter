@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bill_calculator_flutter/services/models.dart';
+import 'package:multiselect_formfield/multiselect_formfield.dart';
+import 'package:bill_calculator_flutter/services/services.dart';
 
 class AddItemScreen extends StatefulWidget {
   final Bill bill;
@@ -15,7 +17,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
   String description = '';
   num cost = 0.0;
   String paidBy = '';
-  List<String> sharedBy = [];
+  List sharedBy = [];
   DateTime date = DateTime.now();
 
   @override
@@ -71,6 +73,35 @@ class _AddItemScreenState extends State<AddItemScreen> {
                     });
                   },
                 ),
+                MultiSelectFormField(
+                  title: const Text(
+                    'Shared by',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 17,
+                    ),
+                  ),
+                  dataSource: widget.bill.friends.map((friend) {
+                    return {"value": friend, "display": friend};
+                  }).toList(),
+                  textField: 'display',
+                  valueField: 'value',
+                  hintWidget: const Text(''),
+                  initialValue: const [],
+                  validator: (values) {
+                    if (values == null || values.length == 0) {
+                      return 'Please select at least one friend';
+                    }
+                    return null;
+                  },
+                  onSaved: (values) {
+                    if (values == null) return;
+                    setState(() {
+                      sharedBy =
+                          values as List<dynamic>; //TODO should be List<String>
+                    });
+                  },
+                ),
                 InputDatePickerFormField(
                   initialDate: DateTime.now(),
                   firstDate: DateTime(2010),
@@ -86,10 +117,9 @@ class _AddItemScreenState extends State<AddItemScreen> {
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      print(description);
-                      print(cost);
-                      print(paidBy);
-                      print(date);
+                      StoreService().addItem(widget.bill.uid, description, cost,
+                          paidBy, sharedBy, date);
+                      Navigator.pop(context);
                     }
                   },
                   child: const Text('Add item'),
@@ -124,7 +154,7 @@ class PaidByDropDownInput extends StatelessWidget {
         return val == null ? 'Please select the payer' : null;
       },
       isExpanded: true,
-      hint: const Text('Paid By'),
+      hint: const Text('Paid by'),
       items: friends
           .map(
             (friend) => DropdownMenuItem(

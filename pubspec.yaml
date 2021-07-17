@@ -29,6 +29,10 @@ dependencies:
     sdk: flutter
   font_awesome_flutter: '^9.1.0'
   google_sign_in: '^5.0.0-nullsafety'
+  # multiselect_formfield update when they fix this issue github.com/cetorres/multiselect_formfield/issues/38
+  multiselect_formfield:
+    git:
+      url: https://github.com/hitshydev/multiselect_formfield
   provider: '^5.0.0'
   rxdart: '^0.27.1'
 
