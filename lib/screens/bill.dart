@@ -68,16 +68,21 @@ class BillScreen extends StatelessWidget {
                       ),
                     ),
                     ItemList(
-                        items: sortedItems,
-                        billId: bill.uid,
-                        onTap: (sharedBy, itemId) =>
-                            StoreService().updateItem(sharedBy, itemId, billId))
+                      items: sortedItems,
+                      billId: bill.uid,
+                      onTap: (sharedBy, itemId) =>
+                          StoreService().updateItem(sharedBy, itemId, billId),
+                    ),
+                    const SliverToBoxAdapter(
+                      child: SizedBox(height: 50),
+                    )
                   ],
                 ),
               );
             },
           );
         } else {
+          // else billId = 'empty'
           return Scaffold(
             appBar: AppBar(),
             endDrawer: BillDrawer(),

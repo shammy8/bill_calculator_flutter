@@ -29,7 +29,10 @@ class _AddBillScreenState extends State<AddBillScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const Text('Add new bill'),
+                Text(
+                  'Add a new bill',
+                  style: Theme.of(context).textTheme.subtitle1,
+                ),
                 TextFormField(
                   decoration: const InputDecoration(hintText: 'Name'),
                   validator: (val) {
@@ -53,8 +56,8 @@ class _AddBillScreenState extends State<AddBillScreen> {
                       color: Colors.blue[300],
                       borderRadius: BorderRadius.circular(6.0),
                     ),
-                    tagCancelIcon:
-                        Icon(Icons.cancel, size: 18.0, color: Colors.black),
+                    tagCancelIcon: const Icon(Icons.cancel,
+                        size: 18.0, color: Colors.black),
                     tagPadding: const EdgeInsets.all(6.0),
                   ),
                   textFieldStyler: TextFieldStyler(

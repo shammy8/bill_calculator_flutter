@@ -36,9 +36,13 @@ class _AddItemScreenState extends State<AddItemScreen> {
                   backgroundImage: NetworkImage(
                       'https://thumbs-prod.si-cdn.com/6MmkyNmsODbteKNYiAMz6201KOw=/800x600/filters:no_upscale():focal(2062x722:2063x723)/https://public-media.si-cdn.com/filer/20/85/2085a351-1759-4b7e-bb3e-eadec17b7aef/papageitaucher_fratercula_arctica.jpg'),
                 ),
-                Text('Add item to ${widget.bill.name}'),
+                const SizedBox(height: 10),
+                Text(
+                  'Add item to ${widget.bill.name}',
+                  style: Theme.of(context).textTheme.headline6,
+                ),
                 TextFormField(
-                  decoration: const InputDecoration(hintText: 'Description'),
+                  decoration: const InputDecoration(labelText: 'Description'),
                   validator: (val) {
                     if (val == '') {
                       return 'Enter a description';
@@ -52,7 +56,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                   },
                 ),
                 TextFormField(
-                  decoration: const InputDecoration(hintText: 'Cost'),
+                  decoration: const InputDecoration(labelText: 'Cost'),
                   keyboardType: TextInputType.number,
                   validator: (val) {
                     if (val == null) return 'Error';
@@ -78,7 +82,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                     'Shared by',
                     style: TextStyle(
                       color: Colors.grey,
-                      fontSize: 17,
+                      fontSize: 13,
                     ),
                   ),
                   dataSource: widget.bill.friends.map((friend) {
@@ -154,7 +158,7 @@ class PaidByDropDownInput extends StatelessWidget {
         return val == null ? 'Please select the payer' : null;
       },
       isExpanded: true,
-      hint: const Text('Paid by'),
+      decoration: const InputDecoration(labelText: 'Paid by'),
       items: friends
           .map(
             (friend) => DropdownMenuItem(
