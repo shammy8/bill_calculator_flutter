@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:textfield_tags/textfield_tags.dart';
+import 'package:bill_calculator_flutter/services/services.dart';
 
 class AddBillScreen extends StatefulWidget {
   const AddBillScreen({Key? key}) : super(key: key);
@@ -10,9 +14,12 @@ class AddBillScreen extends StatefulWidget {
 class _AddBillScreenState extends State<AddBillScreen> {
   final _formKey = GlobalKey<FormState>();
   String name = '';
+  List<String> friends = [];
+  List<String> editors = [];
 
   @override
   Widget build(BuildContext context) {
+    final user = context.watch<User?>();
     return Scaffold(
       appBar: AppBar(),
       body: Container(
@@ -37,20 +44,77 @@ class _AddBillScreenState extends State<AddBillScreen> {
                     setState(() => name = value);
                   },
                 ),
-                TextFormField(
-                  decoration: const InputDecoration(hintText: 'Friends'),
+                const SizedBox(height: 20),
+                // TODO neet to style, add validation and other stuff for these textfieldtags
+                TextFieldTags(
+                  tagsStyler: TagsStyler(
+                    // tagTextStyle: TextStyle(fontWeight: FontWeight.bold),
+                    tagDecoration: BoxDecoration(
+                      color: Colors.blue[300],
+                      borderRadius: BorderRadius.circular(6.0),
+                    ),
+                    tagCancelIcon:
+                        Icon(Icons.cancel, size: 18.0, color: Colors.black),
+                    tagPadding: const EdgeInsets.all(6.0),
+                  ),
+                  textFieldStyler: TextFieldStyler(
+                    helperText: '',
+                    hintText: 'Name of friends',
+                    textFieldEnabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(style: BorderStyle.none),
+                    ),
+                  ),
+                  onTag: (val) {
+                    friends.add(val);
+                  },
+                  onDelete: (val) {
+                    // TODO this doesn't get called when validation stops a tag from being added
+                    friends.remove(val);
+                  },
+                  validator: (tag) {
+                    if (tag != null && tag.length > 15) {
+                      return "hey that's too long";
+                    }
+                    return null;
+                  },
                 ),
-                TextFormField(
-                  decoration: const InputDecoration(hintText: 'Editors'),
+                TextFieldTags(
+                  tagsStyler: TagsStyler(
+                    // tagTextStyle: TextStyle(fontWeight: FontWeight.bold),
+                    tagDecoration: BoxDecoration(
+                      color: Colors.blue[300],
+                      borderRadius: BorderRadius.circular(6.0),
+                    ),
+                    tagCancelIcon: const Icon(Icons.cancel,
+                        size: 18.0, color: Colors.black),
+                    tagPadding: const EdgeInsets.all(6.0),
+                  ),
+                  textFieldStyler: TextFieldStyler(
+                    helperText: '',
+                    hintText: 'UID of editors',
+                    textFieldEnabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(style: BorderStyle.none),
+                    ),
+                  ),
+                  onTag: (val) {
+                    editors.add(val);
+                  },
+                  onDelete: (val) {
+                    editors.remove(val);
+                  },
+                  validator: (tag) {
+                    if (tag != null && tag.length > 30) {
+                      return "hey that's too long";
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      print(name);
-                      // StoreService().addItem(widget.bill.uid, description, cost,
-                      //     paidBy, sharedBy, date);
-                      // Navigator.pop(context);
+                      StoreService().addBill(user!.uid, name, friends, editors);
+                      Navigator.pop(context); // TODO nav to new bill
                     }
                   },
                   child: const Text('Add bill'),

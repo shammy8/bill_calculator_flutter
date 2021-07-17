@@ -4,6 +4,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class StoreService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
+  Future<void> addBill(
+      String userId, String name, List<String> friends, List<String> editors) {
+    final Map<String, bool> formattedEditors = {userId: true};
+    for (final editor in editors) {
+      formattedEditors[editor] = true;
+    }
+    return _db.collection('bills').add({
+      'name': name,
+      'friends': friends,
+      'editors': formattedEditors,
+      'creator': userId
+    });
+  }
+
   Stream<List<Bill>> getAllBills(String userId) {
     return _db
         .collection('bills')
