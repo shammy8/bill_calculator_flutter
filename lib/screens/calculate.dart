@@ -49,49 +49,51 @@ class CalculateScreen extends StatelessWidget {
       appBar: AppBar(),
       body: Container(
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
-        child: Column(
-          children: [
-            const CircleAvatar(
-              minRadius: 100,
-              backgroundImage: NetworkImage(
-                  'https://thumbs-prod.si-cdn.com/6MmkyNmsODbteKNYiAMz6201KOw=/800x600/filters:no_upscale():focal(2062x722:2063x723)/https://public-media.si-cdn.com/filer/20/85/2085a351-1759-4b7e-bb3e-eadec17b7aef/papageitaucher_fratercula_arctica.jpg'),
-            ),
-            const SizedBox(height: 30),
-            Text(
-              'Calculate',
-              style: Theme.of(context).textTheme.headline6,
-            ),
-            const SizedBox(height: 20),
-            for (var friend1 in calculatedLedger.keys)
-              for (var friend2 in calculatedLedger[friend1].keys)
-                if (calculatedLedger[friend1][friend2] as num < 0)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text(friend1,
-                              style: Theme.of(context).textTheme.subtitle1),
-                        ),
-                        const Expanded(child: Text('owes')),
-                        Expanded(
-                          child: Text('$friend2',
-                              style: Theme.of(context).textTheme.subtitle1),
-                        ),
-                        Expanded(
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                                oCcy.format(
-                                    calculatedLedger[friend1][friend2] * -1),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const CircleAvatar(
+                minRadius: 100,
+                backgroundImage: NetworkImage(
+                    'https://thumbs-prod.si-cdn.com/6MmkyNmsODbteKNYiAMz6201KOw=/800x600/filters:no_upscale():focal(2062x722:2063x723)/https://public-media.si-cdn.com/filer/20/85/2085a351-1759-4b7e-bb3e-eadec17b7aef/papageitaucher_fratercula_arctica.jpg'),
+              ),
+              const SizedBox(height: 30),
+              Text(
+                'Calculate',
+                style: Theme.of(context).textTheme.headline6,
+              ),
+              const SizedBox(height: 20),
+              for (var friend1 in calculatedLedger.keys)
+                for (var friend2 in calculatedLedger[friend1].keys)
+                  if (calculatedLedger[friend1][friend2] as num < 0)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Text(friend1,
                                 style: Theme.of(context).textTheme.subtitle1),
                           ),
-                        ),
-                      ],
+                          const Expanded(child: Text('owes')),
+                          Expanded(
+                            child: Text('$friend2',
+                                style: Theme.of(context).textTheme.subtitle1),
+                          ),
+                          Expanded(
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                  oCcy.format(
+                                      calculatedLedger[friend1][friend2] * -1),
+                                  style: Theme.of(context).textTheme.subtitle1),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-          ],
+            ],
+          ),
         ),
       ),
     );
