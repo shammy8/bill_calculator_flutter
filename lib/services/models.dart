@@ -6,13 +6,15 @@ class Bill {
   List<String> friends;
   Map<String, bool> editors;
   String creator;
+  String image;
 
   Bill(
       {required this.uid,
       required this.name,
       required this.friends,
       required this.editors,
-      required this.creator});
+      required this.creator,
+      required this.image});
 
   // factory returns an instance of a class
   factory Bill.fromMap(Map data, String billId) {
@@ -23,6 +25,7 @@ class Bill {
       editors: (data['editors'] as Map)
           .map((key, value) => MapEntry(key as String, value as bool)),
       name: data['name'] as String? ?? '',
+      image: data['image'] as String? ?? '',
     );
   }
 }

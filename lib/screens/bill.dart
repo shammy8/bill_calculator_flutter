@@ -7,7 +7,7 @@ import 'package:bill_calculator_flutter/shared/item_list.dart';
 import 'package:bill_calculator_flutter/services/models.dart';
 import 'package:bill_calculator_flutter/route_generator.dart';
 
-enum billMenu { calculate, delete }
+enum billMenu { calculate, changeImage, delete }
 
 class BillScreen extends StatelessWidget {
   final AuthService auth = AuthService();
@@ -64,7 +64,9 @@ class BillScreen extends StatelessWidget {
                       flexibleSpace: FlexibleSpaceBar(
                         title: Text(bill.name),
                         background: Image.network(
-                          'https://thumbs-prod.si-cdn.com/6MmkyNmsODbteKNYiAMz6201KOw=/800x600/filters:no_upscale():focal(2062x722:2063x723)/https://public-media.si-cdn.com/filer/20/85/2085a351-1759-4b7e-bb3e-eadec17b7aef/papageitaucher_fratercula_arctica.jpg',
+                          bill.image != ''
+                              ? bill.image
+                              : 'https://i.pinimg.com/originals/94/de/9e/94de9e47d14a839b5e1ed98fd5252fab.jpg',
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -89,6 +91,10 @@ class BillScreen extends StatelessWidget {
                               const PopupMenuItem(
                                 value: billMenu.calculate,
                                 child: Text('Calculate'),
+                              ),
+                              const PopupMenuItem(
+                                value: billMenu.changeImage,
+                                child: Text('Change image'),
                               ),
                               const PopupMenuItem(
                                 value: billMenu.delete,
