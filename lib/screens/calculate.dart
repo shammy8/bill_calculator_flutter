@@ -52,10 +52,16 @@ class CalculateScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const CircleAvatar(
-                minRadius: 100,
-                backgroundImage: NetworkImage(
-                    'https://thumbs-prod.si-cdn.com/6MmkyNmsODbteKNYiAMz6201KOw=/800x600/filters:no_upscale():focal(2062x722:2063x723)/https://public-media.si-cdn.com/filer/20/85/2085a351-1759-4b7e-bb3e-eadec17b7aef/papageitaucher_fratercula_arctica.jpg'),
+              Hero(
+                tag: bill.image,
+                child: CircleAvatar(
+                  minRadius: 100,
+                  backgroundImage: NetworkImage(
+                    bill.image != ''
+                        ? bill.image
+                        : 'https://i.pinimg.com/originals/94/de/9e/94de9e47d14a839b5e1ed98fd5252fab.jpg',
+                  ),
+                ),
               ),
               const SizedBox(height: 30),
               Text(

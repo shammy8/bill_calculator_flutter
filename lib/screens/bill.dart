@@ -63,11 +63,14 @@ class BillScreen extends StatelessWidget {
                       expandedHeight: 240,
                       flexibleSpace: FlexibleSpaceBar(
                         title: Text(bill.name),
-                        background: Image.network(
-                          bill.image != ''
-                              ? bill.image
-                              : 'https://i.pinimg.com/originals/94/de/9e/94de9e47d14a839b5e1ed98fd5252fab.jpg',
-                          fit: BoxFit.cover,
+                        background: Hero(
+                          tag: bill.image,
+                          child: Image.network(
+                            bill.image != ''
+                                ? bill.image
+                                : 'https://i.pinimg.com/originals/94/de/9e/94de9e47d14a839b5e1ed98fd5252fab.jpg',
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                       bottom: PreferredSize(
