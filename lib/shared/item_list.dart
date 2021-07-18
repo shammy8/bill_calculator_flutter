@@ -39,6 +39,7 @@ class ItemList extends StatelessWidget {
                 ),
                 TwoSidedCheckableList(
                   sharedBy: sharedBy,
+                  paidBy: item.paidBy,
                   onTap: (sharedByElement, newValue) {
                     // print(sharedByElement);
                     sharedBy = sharedBy.map((element) {
@@ -83,8 +84,10 @@ class ItemList extends StatelessWidget {
 class TwoSidedCheckableList extends StatelessWidget {
   final void Function(SharedByElement, bool) onTap;
   final List<SharedByElement> sharedBy;
+  final String paidBy;
 
-  const TwoSidedCheckableList({required this.sharedBy, required this.onTap});
+  const TwoSidedCheckableList(
+      {required this.sharedBy, required this.paidBy, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -94,9 +97,11 @@ class TwoSidedCheckableList extends StatelessWidget {
           Row(
             children: [
               Switch(
-                onChanged: (value) {
-                  onTap(sharedBy[i], value);
-                },
+                onChanged: sharedBy[i].friend == paidBy
+                    ? null // disable switch by setting to null
+                    : (value) {
+                        onTap(sharedBy[i], value);
+                      },
                 value: sharedBy[i].settled,
               ),
               Text(sharedBy[i].friend),
@@ -105,9 +110,11 @@ class TwoSidedCheckableList extends StatelessWidget {
                 Text(sharedBy[i + 1].friend),
               if (i + 1 < sharedBy.length)
                 Switch(
-                  onChanged: (value) {
-                    onTap(sharedBy[i + 1], value);
-                  },
+                  onChanged: sharedBy[i + 1].friend == paidBy
+                      ? null // disable switch by setting to null
+                      : (value) {
+                          onTap(sharedBy[i + 1], value);
+                        },
                   value: sharedBy[i + 1].settled,
                 ),
             ],
