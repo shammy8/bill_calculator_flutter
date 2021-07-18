@@ -57,13 +57,34 @@ class BillScreen extends StatelessWidget {
                   slivers: [
                     SliverAppBar(
                       pinned: true,
-                      floating: true,
                       expandedHeight: 240,
                       flexibleSpace: FlexibleSpaceBar(
                         title: Text(bill.name),
                         background: Image.network(
                           'https://thumbs-prod.si-cdn.com/6MmkyNmsODbteKNYiAMz6201KOw=/800x600/filters:no_upscale():focal(2062x722:2063x723)/https://public-media.si-cdn.com/filer/20/85/2085a351-1759-4b7e-bb3e-eadec17b7aef/papageitaucher_fratercula_arctica.jpg',
                           fit: BoxFit.cover,
+                        ),
+                      ),
+                      bottom: PreferredSize(
+                        preferredSize: const Size.fromHeight(0),
+                        child: Transform.translate(
+                          offset: const Offset(-150, -3),
+                          child: PopupMenuButton(
+                            onSelected: (val) {
+                              print(val);
+                            },
+                            icon: const Icon(Icons.expand_more),
+                            itemBuilder: (BuildContext context) => [
+                              const PopupMenuItem(
+                                value: 'calculate',
+                                child: Text('Calculate'),
+                              ),
+                              const PopupMenuItem(
+                                value: 'delete',
+                                child: Text('Delete bill'),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
