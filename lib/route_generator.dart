@@ -23,6 +23,13 @@ class RouteGenerator {
         return _errorRoute();
       case '/add_bill':
         return MaterialPageRoute(builder: (_) => const AddBillScreen());
+      case '/calculate':
+        if (args is CalculateScreenArguments) {
+          return MaterialPageRoute(
+            builder: (_) => CalculateScreen(items: args.items, bill: args.bill),
+          );
+        }
+        return _errorRoute();
       default:
         return _errorRoute();
     }
@@ -38,4 +45,11 @@ class RouteGenerator {
       );
     });
   }
+}
+
+class CalculateScreenArguments {
+  final Bill bill;
+  final List<Item> items;
+
+  CalculateScreenArguments({required this.bill, required this.items});
 }

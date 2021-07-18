@@ -5,6 +5,9 @@ import 'package:bill_calculator_flutter/services/services.dart';
 import 'package:bill_calculator_flutter/shared/drawer.dart';
 import 'package:bill_calculator_flutter/shared/item_list.dart';
 import 'package:bill_calculator_flutter/services/models.dart';
+import 'package:bill_calculator_flutter/route_generator.dart';
+
+enum billMenu { calculate, delete }
 
 class BillScreen extends StatelessWidget {
   final AuthService auth = AuthService();
@@ -70,17 +73,25 @@ class BillScreen extends StatelessWidget {
                         child: Transform.translate(
                           offset: const Offset(-150, -3),
                           child: PopupMenuButton(
-                            onSelected: (val) {
-                              print(val);
+                            onSelected: (billMenu val) {
+                              if (val == billMenu.calculate) {
+                                Navigator.of(context).pushNamed(
+                                  '/calculate',
+                                  arguments: CalculateScreenArguments(
+                                    bill: bill,
+                                    items: items,
+                                  ),
+                                );
+                              }
                             },
                             icon: const Icon(Icons.expand_more),
                             itemBuilder: (BuildContext context) => [
                               const PopupMenuItem(
-                                value: 'calculate',
+                                value: billMenu.calculate,
                                 child: Text('Calculate'),
                               ),
                               const PopupMenuItem(
-                                value: 'delete',
+                                value: billMenu.delete,
                                 child: Text('Delete bill'),
                               )
                             ],
