@@ -12,57 +12,69 @@ class ItemList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverPadding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      sliver: SliverList(
-        delegate: SliverChildBuilderDelegate(
-          (BuildContext context, int index) {
-            final Item item = items[index];
-            List<SharedByElement> sharedBy = item.sharedBy;
-
-            return Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(item.description,
-                        style: Theme.of(context).textTheme.headline6),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(oCcy.format(item.cost),
-                            style: Theme.of(context).textTheme.headline6),
-                        paidBySpan(context, item.paidBy),
-                      ],
-                    ),
-                  ],
-                ),
-                TwoSidedCheckableList(
-                  sharedBy: sharedBy,
-                  paidBy: item.paidBy,
-                  onTap: (sharedByElement, newValue) {
-                    // print(sharedByElement);
-                    sharedBy = sharedBy.map((element) {
-                      if (sharedByElement.friend == element.friend) {
-                        return SharedByElement.fromMap({
-                          'friend': sharedByElement.friend,
-                          'settled': newValue
-                        });
-                      } else {
-                        return element;
-                      }
-                    }).toList();
-                    onTap(sharedBy, item.id);
-                  },
-                ),
-                const Divider(),
-              ],
-            );
-          },
-          childCount: items.length,
+    if (items.isEmpty) {
+      return const SliverToBoxAdapter(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          child: Center(
+            child: Text(
+                'Please add an item using the plus button in the bottom right'),
+          ),
         ),
-      ),
-    );
+      );
+    } else {
+      return SliverPadding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        sliver: SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (BuildContext context, int index) {
+              final Item item = items[index];
+              List<SharedByElement> sharedBy = item.sharedBy;
+
+              return Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(item.description,
+                          style: Theme.of(context).textTheme.headline6),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(oCcy.format(item.cost),
+                              style: Theme.of(context).textTheme.headline6),
+                          paidBySpan(context, item.paidBy),
+                        ],
+                      ),
+                    ],
+                  ),
+                  TwoSidedCheckableList(
+                    sharedBy: sharedBy,
+                    paidBy: item.paidBy,
+                    onTap: (sharedByElement, newValue) {
+                      // print(sharedByElement);
+                      sharedBy = sharedBy.map((element) {
+                        if (sharedByElement.friend == element.friend) {
+                          return SharedByElement.fromMap({
+                            'friend': sharedByElement.friend,
+                            'settled': newValue
+                          });
+                        } else {
+                          return element;
+                        }
+                      }).toList();
+                      onTap(sharedBy, item.id);
+                    },
+                  ),
+                  const Divider(),
+                ],
+              );
+            },
+            childCount: items.length,
+          ),
+        ),
+      );
+    }
   }
 
   RichText paidBySpan(BuildContext context, String payer) {
