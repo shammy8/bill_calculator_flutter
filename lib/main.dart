@@ -70,7 +70,10 @@ class _AppState extends State<App> {
       child: MaterialApp(
         initialRoute: '/',
         onGenerateRoute: RouteGenerator.generateRoute,
-        theme: ThemeData(brightness: Brightness.dark),
+        theme: ThemeData(
+          brightness: Brightness.dark,
+          primarySwatch: Colors.teal,
+        ),
       ),
     );
   }
