@@ -62,7 +62,24 @@ class BillScreen extends StatelessWidget {
                       pinned: true,
                       expandedHeight: 240,
                       flexibleSpace: FlexibleSpaceBar(
-                        title: Text(bill.name),
+                        title: TweenAnimationBuilder(
+                          duration: const Duration(milliseconds: 1000),
+                          builder: (BuildContext context, double _val, child) {
+                            return Opacity(
+                              opacity: _val,
+                              child: Padding(
+                                padding: EdgeInsets.only(left: _val * 80),
+                                child: child,
+                              ),
+                            );
+                          },
+                          tween: Tween<double>(begin: 0, end: 1),
+                          child: Text(
+                            bill.name,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w800, letterSpacing: 1),
+                          ),
+                        ),
                         background: Hero(
                           tag: bill.image,
                           child: Image.network(
